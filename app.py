@@ -60,7 +60,7 @@ def generate_llama2_response(prompt_input):
     return output
 
 # User-provided prompt
-prompt = st.text_input("Enter your message:", disabled=not replicate_api)
+prompt = st.text_input("Enter your message:")
 if prompt:
     st.session_state.messages.append({"role": "user", "content": prompt})
     st.text(prompt)
