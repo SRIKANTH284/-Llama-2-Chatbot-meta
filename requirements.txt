@@ -1,2 +1,2 @@
-streamlit
-replicate
+streamlit==1.0.0
+replicate==0.9.0
