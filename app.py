@@ -13,7 +13,7 @@ with st.sidebar:
         replicate_api = st.secrets['REPLICATE_API_TOKEN']
     else:
         replicate_api = st.text_input('Enter Replicate API token:', type='password')
-        if not (replicate_api.startswith('r8_') and len(replicate_api)==40):
+        if not (replicate_api.startswith('r8_') and len(replicate_api) == 40):
             st.warning('Please enter your credentials!', icon='⚠️')
         else:
             st.success('Proceed to entering your prompt message!', icon='👉')
@@ -62,12 +62,13 @@ def generate_llama2_response(prompt_input):
     return output
 
 # User-provided prompt
-if prompt := st.chat_input(disabled=not replicate_api):
+prompt = st.chat_input(disabled=not replicate_api)
+if prompt:
     st.session_state.messages.append({"role": "user", "content": prompt})
     with st.chat_message("user"):
         st.write(prompt)
 
-# Generate a new response if last message is not from assistant
+# Generate a new response if the last message is not from the assistant
 if st.session_state.messages[-1]["role"] != "assistant":
     with st.chat_message("assistant"):
         with st.spinner("Thinking..."):
