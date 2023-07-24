@@ -40,8 +40,7 @@ if "messages" not in st.session_state.keys():
 
 # Display or clear chat messages
 for message in st.session_state.messages:
-    with st.chat_message(message["role"]):
-        st.write(message["content"])
+    st.text(message["content"])
 
 def clear_chat_history():
     st.session_state.messages = [{"role": "assistant", "content": "How may I assist you today?"}]
@@ -61,23 +60,18 @@ def generate_llama2_response(prompt_input):
     return output
 
 # User-provided prompt
-prompt = st.chat_input(disabled=not replicate_api)
+prompt = st.text_input("Enter your message:", disabled=not replicate_api)
 if prompt:
     st.session_state.messages.append({"role": "user", "content": prompt})
-    with st.chat_message("user"):
-        st.write(prompt)
+    st.text(prompt)
 
 # Generate a new response if the last message is not from the assistant
 if st.session_state.messages[-1]["role"] != "assistant":
-    with st.chat_message("assistant"):
-        with st.spinner("Thinking..."):
-            response = generate_llama2_response(prompt)
-            placeholder = st.empty()
-            full_response = ''
-            for item in response:
-                full_response += item
-                placeholder.markdown(full_response)
-            placeholder.markdown(full_response)
-            print(full_response)
+    with st.spinner("Thinking..."):
+        response = generate_llama2_response(prompt)
+        full_response = ''
+        for item in response:
+            full_response += item
+        st.text(full_response)
     message = {"role": "assistant", "content": full_response}
     st.session_state.messages.append(message)
