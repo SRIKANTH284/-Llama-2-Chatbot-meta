@@ -9,16 +9,15 @@ st.set_page_config(page_title="🦙💬 Llama 2 Chatbot")
 with st.sidebar:
     st.title('🦙💬 Llama 2 Chatbot')
     if 'REPLICATE_API_TOKEN' in st.secrets:
-        st.success('API key already provided!', icon='✅')
+        st.success('API key already provided! ✅')
         replicate_api = st.secrets['REPLICATE_API_TOKEN']
     else:
         replicate_api = st.text_input('Enter Replicate API token:', type='password')
-        if not (replicate_api.startswith('r8_') and len(replicate_api)==40):
-            st.warning('Please enter your credentials!', icon='⚠️')
+        if not (replicate_api.startswith('r8_') and len(replicate_api) == 40):
+            st.markdown('<span style="color: red; font-weight: bold;">Please enter your credentials! ⚠️</span>', unsafe_allow_html=True)
         else:
-            st.success('Proceed to entering your prompt message!', icon='👉')
+            st.markdown('<span style="color: green; font-weight: bold;">Proceed to entering your prompt message! 👉</span>', unsafe_allow_html=True)
 
-    
     st.subheader('Models and parameters')
     selected_model = st.sidebar.selectbox('Choose a Llama2 model', ['Llama2-7B', 'Llama2-13B', 'Llama2-70B'], key='selected_model')
     if selected_model == 'Llama2-7B':
@@ -68,7 +67,7 @@ if prompt:
     with st.chat_message("user"):
         st.write(prompt)
 
-# Generate a new response if last message is not from assistant
+# Generate a new response if the last message is not from the assistant
 if st.session_state.messages[-1]["role"] != "assistant":
     with st.chat_message("assistant"):
         with st.spinner("Thinking..."):
