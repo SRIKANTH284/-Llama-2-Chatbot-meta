@@ -1,5 +1,5 @@
 import streamlit as st
-from replicate import run
+from replicate
 import os
 
 # App title
