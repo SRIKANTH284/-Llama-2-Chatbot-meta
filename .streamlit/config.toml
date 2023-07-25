@@ -1,6 +1,25 @@
 [theme]
-primaryColor="#F63366"
-backgroundColor="#FFFFFF"
-secondaryBackgroundColor="#F0F2F6"
-textColor="#262730"
-font="sans serif"
+primaryColor = "#F63366"
+backgroundColor = "#FFFFFF"
+secondaryBackgroundColor = "#F0F2F6"
+textColor = "#262730"
+font = "sans serif"
+interactive = true
+clickableElement = "changeThemeButton"
+
+[script]
+code = """
+document.getElementById('changeThemeButton').addEventListener('click', function() {
+    const primaryColor = getRandomColor();
+    const secondaryBackgroundColor = getRandomColor();
+    const textColor = getRandomColor();
+
+    document.body.style.backgroundColor = secondaryBackgroundColor;
+    document.body.style.color = textColor;
+    document.querySelector('.primary-background').style.backgroundColor = primaryColor;
+});
+
+function getRandomColor() {
+    return '#' + Math.floor(Math.random() * 16777215).toString(16);
+}
+"""
